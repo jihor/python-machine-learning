@@ -1,4 +1,4 @@
-[]# 'pip install numpy' will install numpy
+# 'pip install numpy' will install numpy
 import numpy
 
 # Defining matrices
