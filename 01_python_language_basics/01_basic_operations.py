@@ -3,8 +3,9 @@
    this is a multiline (documentation-style
    comment
 """
-print("Hello \nworld")
-print('\nHello \nworld')   # no difference between " and '
+
+print('------------\nHello, is this the future?')   # no difference between " and '
+print("Python code style is defined in PEP 8\n------------")
 
 # Assignments
 print("\nAssignments")
