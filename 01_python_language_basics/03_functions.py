@@ -42,3 +42,10 @@ x = 7; y = 8; z = 9                              # multiple operations on one st
 r = add_numbers(printout=True, x=x, y=y, z=z)    # "adding 9 and 8 to 7"
 print("{} + {} + {} = {}".format(x, y, z, r))
 
+# Lambda functions
+print("\nLambdas")
+# lambdas are strictly one-command anonymous functions
+# lambdas have access to outer score
+v = 3
+for i in (1, 2, 3, 4, 5):
+    print((lambda x: (x ** 2) + v)(i))
