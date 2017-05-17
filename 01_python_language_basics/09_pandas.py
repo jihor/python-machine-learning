@@ -28,16 +28,32 @@ print(s4[30])            # scott - queried by index label
 print(s4.loc[30])        # scott - queried by index label
 print(s4.iloc[2])        # scott - queried by index position
 
-s5 = pd.Series(np.arange(10000))
-print(s.head())
-
-
 simple_sum = """
 sum = np.int64(0)
 for item in s5:
     sum += item
 """
-t = ti.Timer(stmt=simple_sum, setup="import pandas as pd, numpy as np; s5 = pd.Series(np.arange(10000))")
-print(t.timeit(100))
-t2 = ti.Timer(stmt="s5.sum()", setup="import pandas as pd, numpy as np; s5 = pd.Series(np.arange(10000))")
-print(t2.timeit(100))    # this implementation is vectorized, and therefore faster
+print(ti.timeit(stmt=simple_sum, number=100, setup="import pandas as pd, numpy as np; s5 = pd.Series(np.arange(1000))"))
+# series' own implementation is vectorized, and therefore faster
+print(ti.timeit(stmt="s5.sum()", number=100, setup="import pandas as pd, numpy as np; s5 = pd.Series(np.arange(1000))"))
+
+simple_increment = """
+for item, value in s5.iteritems():
+    s5.iloc[item] = value + 10
+"""
+
+print(ti.timeit(stmt=simple_increment, number=10, setup="import pandas as pd, numpy as np; s5 = pd.Series(np.arange(1000))"))
+# same here, with even more relative speed gain
+print(ti.timeit(stmt="s5 += 10 ", number=10, setup="import pandas as pd, numpy as np; s5 = pd.Series(np.arange(1000))"))
+
+# Pandas values can be changed
+s6 = pd.Series(np.arange(3))
+print(s6)
+s6.set_value(0, 100)
+s6.iloc[1] = 200
+print(s6)   # Values are changed
+# but the index is immutable
+s7 = s6.append(pd.Series(np.arange(2, 5)))
+print(s6)   # Still the same
+print(s7)   # Still the same
+print(s7.loc[2])        # now returns a row set, a new Series object
