@@ -70,6 +70,27 @@ print(m.dot(n))     # matrix doc product, (M,N) * (N*K) -> (M,K)
 print("\nMatrix transposition")
 print(m.T)
 
+print("\nMatrix row-wise stacking")
+a1 = np.arange(6.0).reshape(2, 3).astype(int)
+a2 = np.array([['a', 'b', 'c'], ['d', 'e', 'f']])
+print(np.vstack((a1, a2)))
+print(np.concatenate((a1, a2), axis=0))
+print("\nMatrix column-wise stacking")
+print(np.hstack((a1, a2)))
+print(np.concatenate((a1, a2), axis=1))
+print("\nMatrix row-wise splitting")
+a, b = np.vsplit(a1, 2)
+print("a and b are \n{}, and \n{}".format(a, b))
+a, b, c = np.vsplit(a1.reshape(3, 2), 3)
+print("a, b and c are \n{}, \n{} and \n{}".format(a, b, c))
+a, b, c = np.split(a1.reshape(3, 2), 3, axis=0)  # same
+print("\nMatrix column-wise splitting")
+a, b = np.hsplit(a1.reshape(3, 2), 2)
+print("a and b are \n{}, and \n{}".format(a, b))
+a, b, c = np.hsplit(a1, 3)
+print("a, b and c are \n{}, \n{} and \n{}".format(a, b, c))
+a, b, c = np.split(a1.reshape(2, 3), 3, axis=1)  # same
+
 print("\nMatrix statistic functions")
 print(m.max())      # not the row, only the element
 print(m.min())      # not the row, only the element
