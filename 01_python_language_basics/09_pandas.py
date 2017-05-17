@@ -27,6 +27,8 @@ print(pd.Series(["lily", "scott", "mike"], index=[10, 20, 30]))   # can pass ind
 s4 = pd.Series({30: "scott", 5: "mike", 20: "lily", 7: "rael", 10: "roxy"}, index=[10, 20, 30])   # any values not in index wil be ignored
 print(s4)
 print(s4[30])            # scott - queried by index label
+print(s4[[10, 30]])      # roxy, scott - slicing
+print(s4[0:40])          # roxy, lily, scott - slicing using range
 print(s4.loc[30])        # scott - queried by index label    (loc is not method, it's an attribute with __getitem__ and __setitem__ methods defined)
 print(s4.iloc[2])        # scott - queried by index position (same with iloc)
 
@@ -85,5 +87,11 @@ print("\n", df2.loc["p1"]["age"])
 print("\n", df2.T.loc["name"])
 # slicing is also supported
 print("\n", df2.T.loc[:])
-print("\n", df2.loc["p1", ("age", "sex")])
+print("\n", df2.loc[:, ("age", "sex")])
+print("\n", df2[["age", "sex"]])         # same
+
 # append() and drop() work as in Series, creating copies by default
+
+# There is a difference in slicing:
+# series[label(s)] -> scalar value / series for row set
+# dataframe[colname(s)] -> series for the colname / dataframe with selected columns
