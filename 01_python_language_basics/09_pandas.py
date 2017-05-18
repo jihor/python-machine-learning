@@ -120,3 +120,34 @@ df5 = df2[(df2["Total number of sexual partners by age 30"] % 2 == 0) & (df2["To
 print(df5)
 df6 = df2[(df2["Total number of sexual partners by age 30"] % 2 == 0) | (df2["Total number of sexual partners by age 30"] > 10)]
 print(df6)
+
+df["Sex"] = pd.read_csv("./data/09_pandas/more_features.csv").values          # add new column
+df = df.assign(SexAgain=pd.read_csv("./data/09_pandas/more_features.csv").values)  # same
+print(df)
+# Column projection. Index column will be included automatically
+# print(df[["Height in meters", "Total number of sexual partners by age 30", "Sex"]])
+df = df[["Total number of sexual partners by age 30", "Sex"]]
+print(df)
+df.reset_index(inplace=True)   # can't reindex with moving primary key to secondary in one op, have to reset index
+print(df)
+df.set_index(["Sex", "Height in meters"], inplace=True)  # now we have a compound key
+print(df)
+print(df.loc[[("F", 1.80), ("M", 1.96)]])
+df.index.names = ["s", "h"]    # rename
+df = df.append(pd.Series(data={'Total number of sexual partners by age 30': 10}, name=('M', '1.88')))
+
+# Apparently there is no way to insert a Series by compound index
+# df.loc[('M', '1.89')] = pd.Series({"Total number of sexual partners by age 30": 10})
+# But insert by one column is possible:
+df.loc[('M', '1.89'), "Total number of sexual partners by age 30"] = 10
+print(df)
+
+df.loc[('M', '1.91'), "Total number of sexual partners by age 30"] = None
+print(df)
+df.fillna(0)
+print(df)
+
+time_df = pd.read_csv("./data/09_pandas/time_series.csv", index_col=0)
+time_df.sort_index()
+time_df = time_df.ffill(axis=0)  # ffill is an alias for fillna(method='ffill')
+print(time_df)
