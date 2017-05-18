@@ -95,3 +95,28 @@ print("\n", df2[["age", "sex"]])         # same
 # There is a difference in slicing:
 # series[label(s)] -> scalar value / series for row set
 # dataframe[colname(s)] -> series for the colname / dataframe with selected columns
+
+# Reading files
+print("\nReading files")
+df = pd.read_csv("./data/09_pandas/features_with_values.csv", index_col=0)
+print(df)
+
+df2 = pd.read_csv("./data/09_pandas/target_values.csv")
+df2["Height in meters"] = pd.read_csv("./data/09_pandas/features.csv")
+df2.set_index("Height in meters", inplace=True)
+print(df2)   # same as df
+
+print(df2[1.80:])   # index range
+
+df3 = df2.where(df2["Total number of sexual partners by age 30"] % 2 == 0)  # using a boolean mask
+print(df3)
+print(df3.dropna())   # drop NaN's
+
+df4 = df2[df2["Total number of sexual partners by age 30"] % 2 == 0]
+print(df4)            # shortcut to apply boolean mask and drop NaN's
+
+# boolean masks support bit-wise AND and OR operations
+df5 = df2[(df2["Total number of sexual partners by age 30"] % 2 == 0) & (df2["Total number of sexual partners by age 30"] > 3)]
+print(df5)
+df6 = df2[(df2["Total number of sexual partners by age 30"] % 2 == 0) | (df2["Total number of sexual partners by age 30"] > 10)]
+print(df6)
