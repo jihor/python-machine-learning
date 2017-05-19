@@ -169,12 +169,17 @@ time_df2 = pd.read_csv("./data/09_pandas/time_series_2.csv", index_col=0)
 time_df3 = time_df.join(time_df2, how="inner")
 print(time_df3)
 
-# same with arbitrary merging
+# exactly the same with pandas.merge():
+time_df3a = pd.merge(time_df, time_df2, how="inner", left_index=True, right_index=True)
+print(time_df3a)
+
+# merging without indexes, but by columns:
 time_df = time_df.reset_index()
 time_df2 = time_df2.reset_index()
 time_df4 = pd.merge(time_df, time_df2, how="inner", left_on="time", right_on="time")
-print(time_df4)     # same as time_df3, but doesn't have 'time' as index
+print(time_df4)     # same as time_df3 or time_df3a, but doesn't have 'time' as index
 
+# concatenation
 time_df5 = pd.read_csv("./data/09_pandas/time_series_2.csv", index_col=0)
 time_df6 = pd.concat([time_df3, time_df5])
 print(time_df6)
