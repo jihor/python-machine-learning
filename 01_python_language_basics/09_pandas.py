@@ -151,3 +151,26 @@ time_df = pd.read_csv("./data/09_pandas/time_series.csv", index_col=0)
 time_df.sort_index()
 time_df = time_df.ffill(axis=0)  # ffill is an alias for fillna(method='ffill')
 print(time_df)
+
+# adding new column
+time_df["source"] = "youtube"
+# adding row data manually
+time_df.loc[1495127233] = [45, "youtube"]
+print(time_df)
+time_df["fullscreen"] = pd.Series({1495127143: False, 1495127178: True, 1495127193: True})
+print(time_df)                      # record with key 1495127178 was not added, because there is no row with this index
+time_df = time_df.ffill(axis=0)
+print(time_df)
+
+# merging frames
+print("\nMerging frames")
+# See http://pandas.pydata.org/pandas-docs/stable/merging.html
+time_df2 = pd.read_csv("./data/09_pandas/time_series_2.csv", index_col=0)
+time_df3 = time_df.join(time_df2, how="inner")
+print(time_df3)
+
+# same with arbitrary merging
+time_df = time_df.reset_index()
+time_df2 = time_df2.reset_index()
+time_df4 = pd.merge(time_df, time_df2, how="inner", left_on="time", right_on="time")
+print(time_df4)     # same as time_df3, but doesn't have 'time' as index
