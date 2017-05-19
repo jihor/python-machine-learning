@@ -174,3 +174,7 @@ time_df = time_df.reset_index()
 time_df2 = time_df2.reset_index()
 time_df4 = pd.merge(time_df, time_df2, how="inner", left_on="time", right_on="time")
 print(time_df4)     # same as time_df3, but doesn't have 'time' as index
+
+time_df5 = pd.read_csv("./data/09_pandas/time_series_2.csv", index_col=0)
+time_df6 = pd.concat([time_df3, time_df5])
+print(time_df6)
