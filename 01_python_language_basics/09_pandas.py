@@ -183,3 +183,10 @@ print(time_df4)     # same as time_df3 or time_df3a, but doesn't have 'time' as 
 time_df5 = pd.read_csv("./data/09_pandas/time_series_2.csv", index_col=0)
 time_df6 = pd.concat([time_df3, time_df5])
 print(time_df6)
+
+# nice sort & groupby
+swg = pd.read_csv("./data/09_pandas/sort_with_group.csv")
+# first sort, then group, then head(), and only 2 largest values for each group remain in selection
+swg = swg.sort_values("value", ascending=False).groupby("group").head(2)
+print(swg)
+
