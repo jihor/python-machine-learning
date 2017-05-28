@@ -206,3 +206,10 @@ print(swg.groupby("group")["value"].agg("mean"))
 for group, frame in swg.groupby("group"):
     print("{} has {} elements".format(group, np.alen(frame)))
 
+# Scales in Pandas
+print("\nScales in Pandas")
+# nominal data is called 'categorical' in Pandas
+cat_df = pd.read_csv("./data/09_pandas/categorial.csv", index_col=1)  # use descriptions as index
+# default order is lexicographical, which would'v made 4- > 4
+grades = cat_df["grade"].astype("category", categories=["1", "2", "3-", "3", "3+", "4-", "4", "4+", "5-", "5", "5+"], ordered=True)
+print(grades[grades > "4"])
