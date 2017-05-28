@@ -184,10 +184,25 @@ time_df5 = pd.read_csv("./data/09_pandas/time_series_2.csv", index_col=0)
 time_df6 = pd.concat([time_df3, time_df5])
 print(time_df6)
 
+# Grouping and sorting frames
+print("\nGrouping and sorting frames")
 # nice sort & groupby
 swg = pd.read_csv("./data/09_pandas/sort_with_group.csv")
 # first sort, then group, then head(), and only 2 largest values for each group remain in selection
 print(swg.sort_values("value", ascending=False).groupby("group").head(2))
 # to do group-wise aggregation, it's required to group once again
 print(swg.sort_values("value", ascending=False).groupby("group").head(2).groupby("group").agg('sum'))
+
+# print average value
+print(type(swg.groupby("group")))                 # DataFrameGroupBy
+print(type(swg.groupby("group")["value"]))        # SeriesGroupBy
+# SeriesGroupBy can use dict on series for aggregation (but this approach is deprecated):
+print(swg.groupby("group")["value"].agg({"computed average ": np.average, "computed sum": np.sum}))
+# same on DataFrameGroupBy object
+print(swg.groupby("group")["group", "value"].agg({"computed average ": np.average, "computed sum": np.sum}))
+# same results with another usage of SeriesGroupBy
+print(swg.groupby("group")["value"].agg("mean"))
+# groupby returns group name and corresponding date frame when used in loop construct
+for group, frame in swg.groupby("group"):
+    print("{} has {} elements".format(group, np.alen(frame)))
 

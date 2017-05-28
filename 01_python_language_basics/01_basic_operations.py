@@ -17,10 +17,15 @@ e = a / 2
 f = a ^ 2
 print(a, b, c, d, e, f)
 
+# Multi-line expressions can be done using ( ... ... )
+(print
+   (1 != 1))
+
 # Equality comparisons
 print("\nEquality comparisons")
 print(1 == 1)    # True and False start with capital letter
 print(1 != 1)
+
 
 # Logical operators
 print("\nLogical operators")
