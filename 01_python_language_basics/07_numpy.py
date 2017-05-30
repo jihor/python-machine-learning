@@ -94,6 +94,24 @@ a, b, c = np.split(a1.reshape(2, 3), 3, axis=1)  # same
 print("\nMatrix statistic functions")
 print(m.max())      # not the row, only the element
 print(m.min())      # not the row, only the element
-print(m.mean())
+print(m.mean())     # average of the elements
 print(m.sum())
 print(m.std())      # standard deviation
+
+print("\nDistributions")
+# 3x3 matrix, with each element having, a count of successes from 10 trials with probability 0.5
+x = np.random.binomial(10, 0.5, (3, 3))
+print(type(x))
+print(x)
+
+print((np.random.binomial(20, 0.5, (100, 100) ) > 15).sum())
+
+x = np.random.normal(0, 1.5, 1000)
+# standard deviation
+print(np.sqrt(((x - x.mean()) ** 2).sum()/x.size))
+# same
+print(x.std())
+print(np.std(x))
+
+
+
